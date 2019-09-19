@@ -37,12 +37,10 @@ class ReadBMPFile:
                 count = count + 1
             self.BmpData.append(BmpDataRow)
         self.BmpData.reverse()
-        print(self.BmpData)
         file.close()
         self.R = []
         self.G = []
         self.B = []
-        print("1112121")
 
         for row in range(self.Height):
             R_row = []
