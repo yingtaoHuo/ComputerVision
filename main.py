@@ -3,8 +3,11 @@ import sys
 from BmpRGB import ReadBMPFile
 import cv2
 import matplotlib.pyplot as plt
+import matplotlib as mpl
+import argparse
 
 #filePath = sys.argv[1]
+parser = argparse.AugumentParser
 
 filePath = 'a.bmp'
 def SaveColor(bmpFile):
@@ -41,18 +44,49 @@ def ColorToGray(bmpFile):
 
     print(gray)
     cv2.imwrite("grayCh.bmp",gray)
+    
+def OneColorGradient():
+    fig,ax = plt.subplots(figsize=(6,1))
+    fig.subplots_adjust(bottom=0.5)
+    
+    cmap = mpl.cm.get_cmap('Blues')
+    norm = mpl.colors.Normalize(vmin=0, vmax= 10)
+    
+    cb1 = mpl.colorbar.ColorbarBase(ax,cmap=cmap,norm=norm,orientation='horizontal')
+    cb1.set_label('OneColor Gradient')
+    fig.show
 
 def ColorScale():
-    fig = plt.figure()
-    x = np.array([0,1,2,3,4,5,6,7,8,9])
-    y = np.array([1,1,1,1,1,1,1,1,1,1])
-    plt.scatter(x,y,c=y)
-    plt.colorbar()
+    fig,ax = plt.subplots(figsize=(6,1))
+    fig.subplots_adjust(bottom=0.5)
+    
+    cmap = mpl.cm.jet
+    norm = mpl.colors.Normalize(vmin=0, vmax= 10)
+    
+    cb1 = mpl.colorbar.ColorbarBase(ax,cmap=cmap,norm=norm,orientation='horizontal')
+    cb1.set_label('Color Gradient')
+    fig.show
 
-#def GrayScale():
+def GrayScale():
+    fig,ax = plt.subplots(figsize=(6,1))
+    fig.subplots_adjust(bottom=0.5)
+    #cmap = mpl.cm.jet
+    #print(mpl.cm.jet)
+    cmap = mpl.cm.get_cmap('gray_r')
+    #cmap = mpl.colors.ListedColormap(['white','gray'])
+    norm = mpl.colors.Normalize(vmin=0, vmax= 10)
+    
+    cb1 = mpl.colorbar.ColorbarBase(ax,cmap=cmap,norm=norm,orientation='horizontal')
+    cb1.set_label('Gray Gradient')
+    fig.show
+    
+
 
 
 if __name__ == "__main__":
     bmpFile = ReadBMPFile(filePath)
     #ColorToGray(bmpFile)
+    #ColorScale()
+    GrayScale()
     ColorScale()
+    OneColorGradient()
