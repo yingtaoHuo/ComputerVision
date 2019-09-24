@@ -1,30 +1,35 @@
+####19210_3 霍英涛
+####本文件用于解析BMP文件
+####通过unpack解析二进制文件，保存bmp文件的各类信息
+
+
 from struct import unpack
 
 class ReadBMPFile:
     def __init__(self, filePath):
         file = open(filePath,'rb')
+        ### bmp头文件
         self.Type = unpack('<h',file.read(2))[0]
         self.Size = unpack('<i',file.read(4))[0]
         self.Reserved1 = unpack('<h',file.read(2))[0]
         self.Reserved2 = unpack('<h',file.read(2))[0]
         self.Offbits = unpack('<i',file.read(4))[0]
 
+        ### 位图信息头
         self.Size = unpack('<i',file.read(4))[0]
         self.Width = unpack('<i',file.read(4))[0]
         self.Height = unpack('<i',file.read(4))[0]
         self.Planes = unpack('<h',file.read(2))[0]
         self.BitCount = unpack('<h',file.read(2))[0]
-        
         self.Compree = unpack('<i',file.read(4))[0]
         self.ImageSize = unpack('<i',file.read(4))[0]
         self.XpelsPermeter = unpack('<i',file.read(4))[0]
         self.YpelsPermeter = unpack('<i',file.read(4))[0]
         self.ColoeIndex = unpack('<i',file.read(4))[0]
         self.ColorImp = unpack('<i',file.read(4))[0]
-        self.BmpData = []
         
-        print("输入图片比特值为："+str(self.BitCount))
-
+        ### 位图数据
+        self.BmpData = []
         for height in range(self.Height):
             BmpDataRow = []
             count = 0
